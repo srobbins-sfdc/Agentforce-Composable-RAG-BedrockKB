@@ -1,0 +1,33 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "BedrockKnowledgeBaseAccess",
+            "Effect": "Allow",
+            "Action": [
+                "bedrock:Retrieve",
+                "bedrock:RetrieveAndGenerate"
+            ],
+            "Resource": "arn:aws:bedrock:YOUR_REGION:YOUR_ACCOUNT_ID:knowledge-base/YOUR_KNOWLEDGE_BASE_ID"
+        },
+        {
+            "Sid": "BedrockModelInvocation",
+            "Effect": "Allow",
+            "Action": [
+                "bedrock:InvokeModel"
+            ],
+            "Resource": [
+                "arn:aws:bedrock:*::foundation-model/*",
+                "arn:aws:bedrock:YOUR_REGION:YOUR_ACCOUNT_ID:inference-profile/*"
+            ]
+        },
+        {
+            "Sid": "BedrockInferenceProfileAccess",
+            "Effect": "Allow",
+            "Action": [
+                "bedrock:GetInferenceProfile"
+            ],
+            "Resource": "arn:aws:bedrock:YOUR_REGION:YOUR_ACCOUNT_ID:inference-profile/*"
+        }
+    ]
+}

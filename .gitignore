@@ -1,0 +1,15 @@
+# Salesforce DX
+.sfdx/
+.sf/
+
+# Environment / secrets — never commit these
+*.env
+migration-config.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.cursor/
+.vscode/

@@ -1,0 +1,8 @@
+.sfdx
+.cursor
+*.sh
+*.env
+*.md
+*.drawio
+**/jsconfig.json
+**/.eslintrc.json
