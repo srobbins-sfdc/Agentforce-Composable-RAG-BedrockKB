@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Answers questions on various personal finance topics using a Bedrock Knowledge Base.</description>
+    <developerName>Personal_Finance_FAQ</developerName>
+    <masterLabel>Personal Finance FAQ</masterLabel>
+    <templateVersions>
+        <content>### INSTRUCTIONS:
+1. Analyze the query: Carefully read and understand the user&apos;s question or issue from the QUESTION section.
+2. Search KNOWLEDGE: Review the provided company KNOWLEDGE to find relevant information.
+3. Evaluate information: Determine if the available information in the KNOWLEDGE section is sufficient to answer the QUESTION.
+4. Language Instructions: You must respond in English
+5. Formulate response: To generate a reply &lt;generated_response&gt; to the user, you must follow these rules
+a. Use the relevant knowledge information to generate the response that exactly answers the user&apos;s question and set the &lt;generated response&gt; field.
+b. If the user request cannot by answered knowledge provided, set the &lt;generated_response&gt; to &quot;Sorry, I can&apos;t find an answer based on the available files.&quot;
+c. Include relevant examples of cost percentages or statistics from provided knowledge where possible.
+d. Summarize and format the information found in the KNOWLEDGE section to be easily readable.
+6. Refine and deliver: Ensure your response is polite, professional, brief (3-4 sentences maximum) and in English only. Add: &quot;ℹ️ For information purposes only. For personalized financial advice, contact a licensed financial advisor.&quot; to the end of the response.
+7. Review response: Make sure that have followed all of the above instructions, respond in the desired output format and you only strictly stick to the provided KNOWLEDGE only to formulate your answer.
+8. Apply the following HTML snippet to the end of the generated response: &lt;br&gt;&lt;span&gt;Context provided by &lt;img src=&quot;YOUR_ORG_DOMAIN/resource/BedrockIcon&quot; alt=&quot;Bedrock Icon&quot; style=&quot;vertical-align: middle; height: 20px;&quot;&gt; &lt;b&gt;Bedrock Knowledge Base&lt;/b&gt;&lt;/span&gt;
+
+ ### KNOWLEDGE:
+{!$Apex:BedrockKBPromptBuilder.Prompt}
+
+### QUESTION:
+{!$Input:userQuestion}
+
+ ### RESPONSE:
+</content>
+        <inputs>
+            <apiName>userQuestion</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>userQuestion</masterLabel>
+            <referenceName>Input:userQuestion</referenceName>
+            <required>true</required>
+        </inputs>
+        <primaryModel>sfdc_ai__DefaultBedrockAnthropicClaude45Sonnet</primaryModel>
+        <status>Draft</status>
+        <templateDataProviders>
+            <definition>apex://BedrockKBPromptBuilder</definition>
+            <description>Retrieve relevant text chunks from AWS Bedrock Knowledge Base for prompt grounding.</description>
+            <label>Get Bedrock KB Context</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>question</parameterName>
+                <valueExpression>{!$Input:userQuestion}</valueExpression>
+            </parameters>
+            <referenceName>Apex:BedrockKBPromptBuilder</referenceName>
+        </templateDataProviders>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>
